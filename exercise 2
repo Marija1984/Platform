@@ -1,0 +1,7 @@
+plan = "My plan is to learn some coding during the following 3 months."
+plan += "It is also my plan to finish the project I'm working on."
+print(plan)
+message = "Python seems like fun" + ","
+message += "although I am only at the beginning."
+print(message)
+print("Happy coding to everyone" + "!")
