@@ -20,7 +20,7 @@ def home():
         return render_template('home.html')
 
 
-@app.route('/newuser', methods=['GET','POST'])
+@app.route('/login', methods=['GET','POST'])
 def index():
     if request.method=='POST':
         #Fetch form data
