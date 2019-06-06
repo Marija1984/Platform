@@ -15,6 +15,12 @@ app.config['MYSQL_DB']=db['mysql_db']
 mysql=MySQL(app)
 
 @app.route('/', methods=['GET','POST'])
+def home():
+    if request.method=='GET':
+        return render_template('home.html')
+
+
+@app.route('/newuser', methods=['GET','POST'])
 def index():
     if request.method=='POST':
         #Fetch form data
@@ -25,8 +31,9 @@ def index():
         cur.execute("INSERT INTO users(name,email) VALUES (%s,%s)", (name,email))
         mysql.connection.commit()
         cur.close()
-        return redirect ('/users')
+        return redirect ('/')
     return render_template('index.html')
+
 
 @app.route('/users')
 def users():
