@@ -19,6 +19,10 @@ def home():
     if request.method=='GET':
         return render_template('home.html')
 
+@app.route('/newuser')
+def success():
+    return render_template('success.html')
+
 
 @app.route('/login', methods=['GET','POST'])
 def index():
@@ -31,7 +35,7 @@ def index():
         cur.execute("INSERT INTO users(name,email) VALUES (%s,%s)", (name,email))
         mysql.connection.commit()
         cur.close()
-        return redirect ('/')
+        return redirect ('/newuser')
     return render_template('index.html')
 
 
