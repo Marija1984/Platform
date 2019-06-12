@@ -14,9 +14,11 @@ app.config['MYSQL_DB']=db['mysql_db']
 
 mysql=MySQL(app)
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET','POST'])
 def home():
     if request.method=='GET':
+        return render_template('home.html')
+    if request.method=='POST':
         return render_template('home.html')
 
 @app.route('/newuser')
