@@ -29,10 +29,10 @@ def index():
     if request.method=='POST':
         #Fetch form data
         userDetails = request.form
-        name=userDetails['name']
-        email=userDetails['email']
+        username=userDetails['username']
+        password=userDetails['password']
         cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO users(name,email) VALUES (%s,%s)", (name,email))
+        cur.execute("INSERT INTO users(username,password) VALUES (%s,%s)", (username,password))
         mysql.connection.commit()
         cur.close()
         return redirect ('/newuser')
