@@ -26,7 +26,7 @@ def register_success():
 
 @app.route('/newlogged')
 def login_success():
-    return render_template('login_success')
+    return render_template('login_success.html')
 
 @app.route('/register', methods=['GET','POST'])
 def index():
@@ -54,7 +54,7 @@ def index2():
         cur.execute("INSERT INTO logged(username,password) VALUES (%s,%s)", (username,password))
         mysql.connection.commit()
         cur.close()
-        return redirect ('/newuser')
+        return redirect ('/newlogged')
     return render_template('index2.html')
 
 @app.route('/users')
