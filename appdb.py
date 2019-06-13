@@ -18,15 +18,15 @@ mysql=MySQL(app)
 def home():
     if request.method=='GET':
         return render_template('home.html')
-    if request.method=='POST':
-        return render_template('home.html')
 
+    if request.method=='POST':
+        return redirect('/register')
+    
 @app.route('/newuser')
 def success():
-    return render_template('success.html')
+       return render_template('success.html')
 
-
-@app.route('/login', methods=['GET','POST'])
+@app.route('/register', methods=['GET','POST'])
 def index():
     if request.method=='POST':
         #Fetch form data
@@ -39,7 +39,6 @@ def index():
         cur.close()
         return redirect ('/newuser')
     return render_template('index.html')
-
 
 @app.route('/users')
 def users():
