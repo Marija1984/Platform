@@ -14,17 +14,19 @@ app.config['MYSQL_DB']=db['mysql_db']
 
 mysql=MySQL(app)
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET'])
 def home():
     if request.method=='GET':
         return render_template('home.html')
 
-    if request.method=='POST':
-        return redirect('/register')
     
 @app.route('/newuser')
-def success():
-       return render_template('success.html')
+def register_success():
+       return render_template('register_success.html')
+
+@app.route('/newlogged')
+def login_success():
+    return render_template('login_success')
 
 @app.route('/register', methods=['GET','POST'])
 def index():
@@ -39,6 +41,21 @@ def index():
         cur.close()
         return redirect ('/newuser')
     return render_template('index.html')
+
+
+@app.route('/login', methods=['GET','POST']) 
+def index2():
+    if request.method=='POST':
+        #Fetch form data
+        userDetails = request.form
+        username=userDetails['username']
+        password=userDetails['password']
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO logged(username,password) VALUES (%s,%s)", (username,password))
+        mysql.connection.commit()
+        cur.close()
+        return redirect ('/newuser')
+    return render_template('index2.html')
 
 @app.route('/users')
 def users():
