@@ -14,19 +14,48 @@ app.config['MYSQL_DB']=db['mysql_db']
 
 mysql=MySQL(app)
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET'])
+def home():
+    if request.method=='GET':
+        return render_template('home.html')
+
+    
+@app.route('/newuser')
+def register_success():
+       return render_template('register_success.html')
+
+@app.route('/newlogged')
+def login_success():
+    return render_template('login_success.html')
+
+@app.route('/register', methods=['GET','POST'])
 def index():
     if request.method=='POST':
         #Fetch form data
         userDetails = request.form
-        name=userDetails['name']
-        email=userDetails['email']
+        username=userDetails['username']
+        password=userDetails['password']
         cur=mysql.connection.cursor()
-        cur.execute("INSERT INTO users(name,email) VALUES (%s,%s)", (name,email))
+        cur.execute("INSERT INTO users(username,password) VALUES (%s,%s)", (username,password))
         mysql.connection.commit()
         cur.close()
-        return redirect ('/users')
+        return redirect ('/newuser')
     return render_template('index.html')
+
+
+@app.route('/login', methods=['GET','POST']) 
+def index2():
+    if request.method=='POST':
+        #Fetch form data
+        userDetails = request.form
+        username=userDetails['username']
+        password=userDetails['password']
+        cur=mysql.connection.cursor()
+        cur.execute("INSERT INTO logged(username,password) VALUES (%s,%s)", (username,password))
+        mysql.connection.commit()
+        cur.close()
+        return redirect ('/newlogged')
+    return render_template('index2.html')
 
 @app.route('/users')
 def users():
@@ -35,6 +64,11 @@ def users():
     if resultValue > 0:
         userDetails = cur.fetchall() 
         return render_template('users.html', userDetails=userDetails)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
