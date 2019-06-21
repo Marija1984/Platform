@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_mysqldb import MySQL
 import yaml
 
+
 app = Flask(__name__)
 
 
@@ -42,7 +43,6 @@ def index():
         return redirect ('/newuser')
     return render_template('index.html')
 
-
 @app.route('/login', methods=['GET','POST']) 
 def index2():
     if request.method=='POST':
@@ -56,6 +56,11 @@ def index2():
         cur.close()
         return redirect ('/newlogged')
     return render_template('index2.html')
+
+@app.route('/create')
+def Profile():
+        return render_template('Profile.html')
+
 
 @app.route('/users')
 def users():
